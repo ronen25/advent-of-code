@@ -14,7 +14,7 @@ fn main() -> IOResult<()> {
             floor += 1;
         } else if character == ')' {
             // Check if it's the first position where Santa is in the basement
-            if (floor == -1 && !already_counted_basement) {
+            if floor == -1 && !already_counted_basement {
                 println!(
                     "Position of character where santa first visits the basement: {}",
                     index
