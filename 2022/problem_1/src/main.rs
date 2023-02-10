@@ -12,7 +12,6 @@ fn main() {
         elf_calories.push(sum);
     }
 
-    // Find and print maximum value (and index + 1)
     let max_calories = elf_calories.iter().max().take().unwrap_or(&0);
 
     println!("Max calories = {max_calories}");
