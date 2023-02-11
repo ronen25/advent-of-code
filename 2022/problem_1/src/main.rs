@@ -6,13 +6,15 @@ fn main() {
         let sum = calories_line
             .lines()
             .map(|line_value| line_value.parse::<i32>().unwrap_or_default())
-            .reduce(|acc, value| acc + value)
-            .unwrap_or(0 as i32);
+            .sum::<i32>();
 
         elf_calories.push(sum);
     }
 
-    let max_calories = elf_calories.iter().max().take().unwrap_or(&0);
+    elf_calories.sort_by(|item1, item2| item2.cmp(item1));
 
-    println!("Max calories = {max_calories}");
+    let max_calories = &elf_calories[0..3];
+    let sum_max: i32 = max_calories.iter().sum();
+
+    println!("Max calories = {max_calories:?}, sum = {sum_max}");
 }
