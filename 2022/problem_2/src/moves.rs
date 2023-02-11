@@ -20,9 +20,9 @@ impl TryFrom<&str> for Move {
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         match value {
-            "A" | "X" => Ok(Move::Rock),
-            "B" | "Y" => Ok(Move::Paper),
-            "C" | "Z" => Ok(Move::Scissors),
+            "A" => Ok(Move::Rock),
+            "B" => Ok(Move::Paper),
+            "C" => Ok(Move::Scissors),
             _ => Err(format!("Unknown move value '{value}'")),
         }
     }
