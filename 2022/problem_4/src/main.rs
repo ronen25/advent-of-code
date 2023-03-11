@@ -15,20 +15,17 @@ fn is_range_fully_contains(range1: &str, range2: &str) -> bool {
     (min1 <= min2 && max1 >= max2) || (min2 <= min1 && max2 >= max1)
 }
 
-fn part1(contents: &str) -> i32 {
-    let mut count = 0;
+fn part1(contents: &str) -> usize {
+    let contained_ranges_count = contents
+        .lines()
+        .map(|line| {
+            let pairs = line.split(',').collect::<Vec<&str>>();
+            (pairs[0], pairs[1])
+        })
+        .filter(|&(range1, range2)| is_range_fully_contains(range1, range2))
+        .count();
 
-    for line in contents.lines() {
-        let pairs = line.split(',').collect::<Vec<&str>>();
-        let (range1, range2) = (pairs[0], pairs[1]);
-
-        let is_contained = is_range_fully_contains(range1, range2);
-        if is_contained {
-            count += 1;
-        }
-    }
-
-    count
+    contained_ranges_count
 }
 
 fn main() {
