@@ -15,6 +15,13 @@ fn is_range_fully_contains(range1: &str, range2: &str) -> bool {
     (min1 <= min2 && max1 >= max2) || (min2 <= min1 && max2 >= max1)
 }
 
+fn is_ranges_overlapping(range1: &str, range2: &str) -> bool {
+    let (min1, max1) = parse_range(range1);
+    let (min2, max2) = parse_range(range2);
+
+    (min1 <= min2 && min2 <= max1) || (min2 <= min1 && min1 <= max2)
+}
+
 fn part1(contents: &str) -> usize {
     let contained_ranges_count = contents
         .lines()
@@ -26,6 +33,19 @@ fn part1(contents: &str) -> usize {
         .count();
 
     contained_ranges_count
+}
+
+fn part2(contents: &str) -> usize {
+    let overlapping_ranges_count = contents
+        .lines()
+        .map(|line| {
+            let pairs = line.split(',').collect::<Vec<&str>>();
+            (pairs[0], pairs[1])
+        })
+        .filter(|&(range1, range2)| is_ranges_overlapping(range1, range2))
+        .count();
+
+    overlapping_ranges_count
 }
 
 fn main() {
@@ -60,19 +80,38 @@ mod tests {
         let range2 = "2-8";
 
         assert_eq!(is_range_fully_contains(range1, range2), true);
+
+        let range_not_1 = "2-4";
+        let range_not_2 = "6-8";
+
+        assert_eq!(is_range_fully_contains(range_not_1, range_not_2), false);
     }
 
     #[test]
-    fn not_in_range() {
-        let range1 = "2-4";
-        let range2 = "6-8";
+    fn is_overlapping() {
+        let range_overlap_1 = "5-7";
+        let range_overlap_2 = "7-9";
 
-        assert_eq!(is_range_fully_contains(range1, range2), false);
+        assert_eq!(
+            is_ranges_overlapping(range_overlap_1, range_overlap_2),
+            true
+        );
+
+        let range_not_1 = "2-4";
+        let range_not_2 = "6-8";
+
+        assert_eq!(is_ranges_overlapping(range_not_1, range_not_2), false);
     }
 
     #[test]
     fn part1() {
         let input = include_str!("../input.txt");
         assert_eq!(super::part1(input), 534);
+    }
+
+    #[test]
+    fn part2() {
+        let input = include_str!("../input.txt");
+        assert_eq!(super::part2(input), 841);
     }
 }
