@@ -52,18 +52,12 @@ fn main() {
     let input = include_str!("../input.txt");
 
     println!("Part 1 answer = {}", part1(input));
+    println!("Part 2 answer = {}", part2(input));
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    const EXAMPLE1: &'static str = "2-4,6-8
-    2-3,4-5
-    5-7,7-9
-    2-8,3-7
-    6-6,4-6
-    2-6,4-8";
 
     #[test]
     fn parse_range() {
