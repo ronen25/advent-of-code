@@ -15,7 +15,7 @@ fn is_range_fully_contains(range1: &str, range2: &str) -> bool {
     (min1 <= min2 && max1 >= max2) || (min2 <= min1 && max2 >= max1)
 }
 
-fn part1(contents: &str) {
+fn part1(contents: &str) -> i32 {
     let mut count = 0;
 
     for line in contents.lines() {
@@ -28,13 +28,13 @@ fn part1(contents: &str) {
         }
     }
 
-    println!("{}", count);
+    count
 }
 
 fn main() {
     let input = include_str!("../input.txt");
 
-    part1(input);
+    println!("Part 1 answer = {}", part1(input));
 }
 
 #[cfg(test)]
@@ -76,6 +76,6 @@ mod tests {
     #[test]
     fn part1() {
         let input = include_str!("../input.txt");
-        println!("{}", input);
+        assert_eq!(super::part1(input), 534);
     }
 }
